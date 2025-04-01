@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Dónde comemos hoy?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .ruleta {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            border: 5px solid #ff69b4;
+            transition: transform 7s ease-out;
+        }
+        .boton {
+            background-color: #ff4081;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .boton:hover {
+            background-color: #e60073;
+        }
+        .resultado, .lista {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .lista {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍽️ La Buchoniruleta de Selina y Javier 🌸</h1>
+    <div class="ruleta" id="ruleta">🎡</div>
+    <button class="boton" onclick="girarRuleta()">Girar Ruleta</button>
+    <p class="resultado" id="resultado"></p>
+    <div class="lista" id="listaRestaurantes"></div>
+
+    <script>
+        const opciones = {
+            "Hindú": ["The Crown (Puerto de la Cruz)", "Delhi Darbar (Puerto de la Cruz)", "Indian Express (La Laguna)", "Taj Mahal (Santa Cruz)", "Taste of India (Los Cristianos)", "Bombay Babu (Costa Adeje)", "Gandhi Indian Tandoori (Santa Cruz)", "Shan Indian Tandoori (Puerto de la Cruz)", "Namasté India (La Orotava)", "Saffron Indian Restaurant (Santa Cruz)"],
+            "Kebab": ["Kebab Los Doa (La Orotava)", "Kebabish (La Laguna)", "Aladdin Kebab (Puerto de la Cruz)", "King Döner (Tacoronte)", "Istanbul Kebab (Santa Cruz)", "Ali Baba Kebab (La Laguna)", "Turkish King (Puerto de la Cruz)", "Oasis Kebab (Candelaria)", "Sahara Kebab (Los Cristianos)", "Döner Land (Santa Cruz)"],
+            "China": ["Restaurante Mei Lin (Puerto de la Cruz)", "Gran Dragón (La Laguna)", "Ni Hao (Santa Cruz)", "Hong Kong City (Puerto de la Cruz)", "Panda Garden (Los Cristianos)", "China Town (Tacoronte)", "Feng Shui (La Orotava)", "Golden House (Santa Cruz)", "Palacio Oriental (Puerto de la Cruz)", "Pekin Express (La Laguna)"],
+            "Hamburguesa": ["McLolo (Santa Úrsula)", "Smash Hub (La Laguna)", "Hangar (La Laguna)", "Burger Mel (Tacoronte)", "La Bodega Burger (La Laguna)", "Street Burger (Puerto de la Cruz)", "Barraquito Burger (Santa Cruz)", "Mad Burger (La Orotava)", "Rocky Burger (Candelaria)", "Tasty Burgers (Santa Cruz)"],
+            "Bocadillo": ["Nolymar (La Orotava)", "McLolo (Santa Úrsula)", "Bar Imperial (La Laguna)", "El Guachinche de los Bocatas (Tacoronte)", "La Sandwichería (Puerto de la Cruz)", "Bocaditos Express (Santa Cruz)", "El Rinconcito (Los Realejos)", "Casa Pepe (Candelaria)", "Delicias Bocata (La Orotava)", "Super Bocatas (Santa Cruz)"]
+        };
+
+        function girarRuleta() {
+            const ruleta = document.getElementById("ruleta");
+            const vueltas = Math.floor(Math.random() * 10) + 10;
+            const anguloFinal = 360 * vueltas + Math.floor(Math.random() * 360);
+            ruleta.style.transform = `rotate(${anguloFinal}deg)`;
+            
+            setTimeout(() => {
+                const seleccion = Object.keys(opciones)[Math.floor(Math.random() * Object.keys(opciones).length)];
+                document.getElementById("resultado").innerText = "¡Hoy toca: " + seleccion + "!";
+                mostrarRestaurantes(seleccion);
+            }, 7000);
+        }
+
+        function mostrarRestaurantes(categoria) {
+            const lista = document.getElementById("listaRestaurantes");
+            lista.innerHTML = "<h2>Opciones en " + categoria + "</h2>" + opciones[categoria].map(rest => `<p>🌟 ${rest}</p>`).join("");
+        }
+    </script>
+</body>
+</html>
